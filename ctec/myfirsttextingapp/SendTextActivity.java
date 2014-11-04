@@ -35,9 +35,28 @@ public class SendTextActivity extends Activity
 			@Override
 			public void onClick(View currentView)
 			{
-				
+				try
+				{
+					String contact = PhoneNumber.getText().toString();
+					String message = Message.getText().toString();
+					sendSMS(contact, message);
+					
+					Toast.makeText(currentView.getContext(), "message was sent", Toast.LENGTH_SHORT).show();
+					
+				}
+				catch(Exception currentException)
+				{
+					Toast.makeText(currentView.getContext(),  "message was not sent", Toast.LENGTH_LONG).show();
+					Toast.makeText(currentView.getContext(),  currentException.getMessage(),  Toast.LENGTH_LONG).show();
+				}
 			}
 		});
+	}
+	
+	private void sendSMS(String messageAddress, String messageContent)
+	{
+		SmsManager mySMSManager = SmsManager.getDefault();
+		mySMSManager.sendTextMessage(messageAddress, null, messageContent, null, null);
 	}
 	
 }
